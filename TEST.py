@@ -219,6 +219,12 @@ def main(args):  # 传入参数
         test_mae = evaluate(model=model, data_loader=test_loader, device=device,
                             network_type=network_type, output=output, gp_use=args.gp_use)
         print('test_mae:', test_mae)
+    elif output  == 9:  # 估计了不确定性的状况
+        epc_ale_ratio = args.epc_ale_ratio
+        test_mae, cof, p_val = evaluate(model=model, data_loader=test_loader, device=device,
+                                        network_type=network_type, output=output, gp_use=args.gp_use,
+                                        mc_dropout=args.mc_dropout, epc_ale_ratio=epc_ale_ratio)
+        print('test_mae:', test_mae, 'cof', cof, 'p_val', p_val)
 
     else:  # 估计了不确定性的状况
 
@@ -227,6 +233,8 @@ def main(args):  # 传入参数
                                         network_type=network_type, output=output, gp_use=args.gp_use,
                                         mc_dropout=args.mc_dropout, epc_ale_ratio=epc_ale_ratio)
         print('test_mae:', test_mae, 'cof', cof, 'p_val', p_val)
+
+
 
 
 if __name__ == '__main__':
